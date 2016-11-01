@@ -21,16 +21,17 @@
  		export apr_cv_mutex_robust_shared=yes
  	 ;;
      esac
-@@ -409,9 +409,6 @@ elif test "x${ax_cv_c_compiler_vendor}"
+@@ -419,9 +419,5 @@ elif test "x${ax_cv_c_compiler_vendor}"
      APR_ADDTO(SWITCH_AM_CFLAGS, -fPIC)
      APR_ADDTO(SWITCH_AM_CXXFLAGS, -fPIC)
      AC_SUBST([AM_MOD_AVMD_CXXFLAGS], [-std=gnu99])      # FS-8809, needed for MAP_POPULATE
 -    if test "$ac_cv_gcc_supports_w_no_unused_result" = yes; then
 -      APR_ADDTO(SWITCH_AM_CFLAGS, -Werror)
+-      APR_ADDTO(SWITCH_AM_CFLAGS, -Wno-unused-result)
 -    fi
-     if test "${enable_64}" = "yes"; then
- 	case "$host" in
-              *darwin*)
+     if test "$ac_cv_gcc_supports_w_no_misleading_indentation" = yes; then
+       APR_ADDTO(SWITCH_AM_CFLAGS, -Wno-misleading-indentation)
+     fi
 @@ -912,7 +909,6 @@ AC_CHECK_LIB(pthread, pthread_setschedpa
  
  AC_CHECK_FUNC(socket, , AC_CHECK_LIB(socket, socket))

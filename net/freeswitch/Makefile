@@ -27,7 +27,7 @@ PKG_SOURCE_URL:=https://$(PKG_NAME).org/stash/scm/fs/$(PKG_NAME).git
 PATCH_DIR:=./patches/$(CONFIG_LIBC)
 
 
-FS_WITH_DEFAULT_HEAD:=cc0a062204cb51311619cd37f51b32b2f266729f
+FS_WITH_DEFAULT_HEAD:=c9452d15d0554bcf557f216dad14a5fe351a43c4
 FS_WITH_DEFAULT_HEAD_SHORT:=$(shell echo $(FS_WITH_DEFAULT_HEAD)|cut -b -7)
 PKG_SOURCE_VERSION:=$(if $(CONFIG_FS_WITH_LATEST_HEAD),$(shell git ls-remote $(PKG_SOURCE_URL) HEAD | cut -f1),$(FS_WITH_DEFAULT_HEAD))
 PKG_SOURCE_VERSION_SHORT:=$(shell echo $(PKG_SOURCE_VERSION)|cut -b -7)
@@ -246,12 +246,6 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
 ifneq ($(CONFIG_FS_WITH_PYTHON),)
 $(call include_mk, python3-package.mk)
-endif
-
-
-ifneq ($(CONFIG_CCACHE),)
-TARGET_CC=$(TARGET_CC_NOCACHE)
-TARGET_CXX=$(TARGET_CXX_NOCACHE)
 endif
 
 
@@ -553,12 +547,7 @@ ifeq ($(CONFIG_LIBC),musl)
 endif
 
 
-MAKE_FLAGS += \
-	AR="$(TOOLCHAIN_DIR)/bin/$(TARGET_CROSS)ar" \
-	CC="$(TOOLCHAIN_DIR)/bin/$(TARGET_CC)" \
-	CXX="$(TOOLCHAIN_DIR)/bin/$(TARGET_CXX)" \
-	RANLIB="$(TOOLCHAIN_DIR)/bin/$(TARGET_CROSS)ranlib" \
-	CC_FOR_BUILD="$(HOSTCC)" \
+MAKE_FLAGS += CC_FOR_BUILD="$(HOSTCC)"
 
 
 MAKE_VARS += \
